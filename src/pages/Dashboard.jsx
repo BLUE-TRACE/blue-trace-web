@@ -1,34 +1,124 @@
 import React, { useState } from "react";
-import reactLogo from '../assets/react.svg';
-import viteLogo from '/vite.svg';
-import '../App.css'
+import DateTimeWidget from "../components/DateTimeWidget";
+import LectureDetailCard from "../components/LectureDetailCard";
+import { MoreVertical } from "lucide-react";
+import Table from "../components/Table";
+import DashboardSummary from "../components/DashboardSummary";
+import "../App.css";
 
 const Dashboard = () => {
-  const [count, setCount] = useState(0);
-  
+  // 1. Define the dynamic columns
+  const tableColumns = [
+    {
+      key: "course",
+      label: "Course",
+      render: (value, row) => (
+        <span className={getStatusColor(row.status)}>{value}</span>
+      ),
+    },
+    {
+      key: "startTime",
+      label: "Start Time",
+      render: (value, row) => (
+        <span className={getStatusColor(row.status)}>{value}</span>
+      ),
+    },
+    {
+      key: "endTime",
+      label: "End Time",
+      render: (value, row) => (
+        <span className={getStatusColor(row.status)}>{value}</span>
+      ),
+    },
+    {
+      key: "hall",
+      label: "Hall",
+      render: (value, row) => (
+        <span className={getStatusColor(row.status)}>{value}</span>
+      ),
+    },
+    {
+      key: "status",
+      label: "Status",
+      render: (value) => <span className={getStatusColor(value)}>{value}</span>,
+    },
+    {
+      key: "actions",
+      label: "More details",
+      align: "center",
+      render: (_, row) => (
+        <button
+          className={`${getStatusColor(row.status)} hover:opacity-70 transition-opacity`}
+        >
+          <MoreVertical size={20} />
+        </button>
+      ),
+    },
+  ];
+
+  // 2. Helper function to determine text color based on status
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "Finished":
+        return "text-[#00E5FF]"; // Teal/Cyan color
+      case "Cancelled":
+        return "text-[#FF4444]"; // Red color
+      case "Not Yet Started":
+      default:
+        return "text-gray-400"; // Default gray
+    }
+  };
+
+  // 3. Define the data
+  const timetableData = [
+    {
+      course: "SENG 1223",
+      startTime: "10:00:00",
+      endTime: "10:00:00",
+      hall: "A11 301",
+      status: "Finished",
+    },
+    {
+      course: "SENG 1223",
+      startTime: "10:00:00",
+      endTime: "10:00:00",
+      hall: "A11 301",
+      status: "Cancelled",
+    },
+    {
+      course: "SENG 1223",
+      startTime: "10:00:00",
+      endTime: "10:00:00",
+      hall: "A11 301",
+      status: "Not Yet Started",
+    },
+    {
+      course: "SENG 1223",
+      startTime: "10:00:00",
+      endTime: "10:00:00",
+      hall: "A11 301",
+      status: "Not Yet Started",
+    },
+  ];
+
   return (
     <>
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <div className="flex flex-row justify-between">
+          <DateTimeWidget />
+          <LectureDetailCard />
+        </div>
+
+        <div className="min-h-screen p-8 bg-black">
+          <Table
+            title="Today's Timetable"
+            columns={tableColumns}
+            data={timetableData}
+          />
+        </div>
+
+        <div><DashboardSummary /></div>
       </div>
-      <h1 className="text-primary">Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-      {/* <div>Hello this is dashboard</div> */}
     </>
   );
 };
