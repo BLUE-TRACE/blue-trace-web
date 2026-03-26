@@ -18,7 +18,7 @@ const StatCard = ({ title, value, valueColor = "text-white", iconColor = "text-w
 const DashboardSummary = () => {
   return (
     // Outer container simulating the app background
-    <div className="flex items-center justify-center min-h-screen p-4 font-sans bg-black">
+    <div className="flex items-center justify-center w-full p-4 font-sans bg-black">
       
       {/* Main Card Wrapper */}
       <div className="relative w-full mt-16 max-w-95">
