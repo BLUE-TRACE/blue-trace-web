@@ -103,13 +103,14 @@ const Dashboard = () => {
 
   return (
     <>
-      <div>
-        <div className="flex flex-row justify-between">
+      <div className="mx-16">
+
+        <div className="flex flex-col justify-between gap-10 lg:flex-row">
           <DateTimeWidget />
           <LectureDetailCard />
         </div>
 
-        <div className="min-h-screen p-8 bg-black">
+        <div className="min-h-screen mt-10">
           <Table
             title="Today's Timetable"
             columns={tableColumns}
