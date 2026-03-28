@@ -4,7 +4,7 @@ import Root from "../Layout/Root";
 import { createBrowserRouter } from "react-router-dom";
 
 // NOTE: IMPORT LECTURER PAGES
-import Dashboard from "../pages/Dashboard";
+import Dashboard from "../pages/Lecturer/Dashboard";
 
 // NOTE: IMPORT STUDENT PAGES
 
