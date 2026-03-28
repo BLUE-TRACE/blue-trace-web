@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import DateTimeWidget from "../components/DateTimeWidget";
-import LectureDetailCard from "../components/LectureDetailCard";
+import DateTimeWidget from "../../components/DateTimeWidget";
+import LectureDetailCard from "../../components/LectureDetailCard";
 import { MoreVertical } from "lucide-react";
-import Table from "../components/Table";
-import DashboardSummary from "../components/DashboardSummary";
-import "../App.css";
+import Table from "../../components/Table";
+import DashboardSummary from "../../components/DashboardSummary";
+import "../../App.css";
 
 const Dashboard = () => {
   // 1. Define the dynamic columns
