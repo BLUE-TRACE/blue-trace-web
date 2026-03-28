@@ -2,7 +2,16 @@
 import React from "react";
 import Root from "../Layout/Root";
 import { createBrowserRouter } from "react-router-dom";
+
+// NOTE: IMPORT LECTURER PAGES
 import Dashboard from "../pages/Dashboard";
+
+// NOTE: IMPORT STUDENT PAGES
+
+// NOTE: IMPORT ADMIN PAGES
+
+// NOTE: IMPORT AUTH PAGES
+import SignIn from "../pages/Login/Signin";
 
 // NOTE: DEFINE ROUTES
 const router = createBrowserRouter([
@@ -16,6 +25,11 @@ const router = createBrowserRouter([
       },
     ],
   },
+  // AUTH ROUTES
+  {
+    path: "/signin",
+    element: <SignIn />,
+  }
 ]);
 
 export default router;
