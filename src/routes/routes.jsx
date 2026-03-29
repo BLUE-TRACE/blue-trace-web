@@ -9,6 +9,7 @@ import AttendanceMark from "../pages/Lecturer/AttendanceMark";
 
 // NOTE: IMPORT STUDENT PAGES
 import DashboardStudent from "../pages/Student/DashboardStudent";
+import AttendanceStudent from "../pages/Student/AttendanceStudent";
 
 // NOTE: IMPORT ADMIN PAGES
 
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: "/student",
         element: <DashboardStudent />,
+      },
+      {
+        path: "/student/attendance",
+        element: <AttendanceStudent />,
       },
 
     ],
