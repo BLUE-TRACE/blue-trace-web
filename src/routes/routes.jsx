@@ -5,6 +5,7 @@ import { createBrowserRouter } from "react-router-dom";
 
 // NOTE: IMPORT LECTURER PAGES
 import Dashboard from "../pages/Lecturer/Dashboard";
+import AttendanceMark from "../pages/Lecturer/AttendanceMark";
 
 // NOTE: IMPORT STUDENT PAGES
 import DashboardStudent from "../pages/Student/DashboardStudent";
@@ -24,10 +25,17 @@ const router = createBrowserRouter([
         index: true,
         element: <Dashboard />,
       },
+      // LECTURER ROUTES
+      {
+        path: "/lecturer/attendance-mark",
+        element: <AttendanceMark />,
+      },
+      // STUDENT ROUTES
       {
         path: "/student",
         element: <DashboardStudent />,
-      }
+      },
+
     ],
   },
   // AUTH ROUTES
