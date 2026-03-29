@@ -6,7 +6,7 @@ import Table from "../../components/Table";
 import DashboardSummary from "../../components/DashboardSummary";
 import "../../App.css";
 
-const Dashboard = () => {
+const DashboardStudent = () => {
   // 1. Define the dynamic columns
   const tableColumns = [
     {
@@ -104,7 +104,7 @@ const Dashboard = () => {
   return (
     <>
       <div className="mx-16">
-        <div className="mb-10 text-2xl font-medium text-start">Hi, Dr. Isuru</div>
+        <div className="mb-10 text-2xl font-medium text-start">Hi, Rusiru</div>
         <div className="flex flex-col justify-between gap-10 lg:flex-row">
           <DateTimeWidget />
           <LectureDetailCard />
@@ -122,4 +122,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default DashboardStudent;

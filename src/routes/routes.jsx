@@ -7,6 +7,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Dashboard from "../pages/Lecturer/Dashboard";
 
 // NOTE: IMPORT STUDENT PAGES
+import DashboardStudent from "../pages/Student/DashboardStudent";
 
 // NOTE: IMPORT ADMIN PAGES
 
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
         index: true,
         element: <Dashboard />,
       },
+      {
+        path: "/student",
+        element: <DashboardStudent />,
+      }
     ],
   },
   // AUTH ROUTES
