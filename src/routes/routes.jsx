@@ -16,6 +16,10 @@ import AttendanceStudent from "../pages/Student/AttendanceStudent";
 // NOTE: IMPORT AUTH PAGES
 import SignIn from "../pages/Login/Signin";
 
+import TimeTablePage from "../pages/Lecturer/TimeTablePage";
+
+
+
 // NOTE: DEFINE ROUTES
 const router = createBrowserRouter([
   {
@@ -26,6 +30,11 @@ const router = createBrowserRouter([
         index: true,
         element: <Dashboard />,
       },
+      {
+        path: "/lecturer/timetable",
+        element: <TimeTablePage />,
+      },
+
       // LECTURER ROUTES
       {
         path: "/lecturer/attendance-mark",
