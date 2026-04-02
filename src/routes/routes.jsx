@@ -18,7 +18,7 @@ import SignIn from "../pages/Login/Signin";
 
 import TimeTablePage from "../pages/Lecturer/TimeTablePage";
 
-
+import StudentTimeTable from "../pages/Student/StudentTimeTable";
 
 // NOTE: DEFINE ROUTES
 const router = createBrowserRouter([
@@ -49,6 +49,10 @@ const router = createBrowserRouter([
         path: "/student/attendance",
         element: <AttendanceStudent />,
       },
+      {
+        path: "/student/timetable",
+        element: <StudentTimeTable />,
+},
 
     ],
   },
