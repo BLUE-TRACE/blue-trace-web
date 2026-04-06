@@ -14,7 +14,7 @@ import AttendanceStudent from "../pages/Student/AttendanceStudent";
 // NOTE: IMPORT ADMIN PAGES
 
 // NOTE: IMPORT AUTH PAGES
-import SignIn from "../pages/Login/Signin";
+import SignIn from "../pages/Login/SignIn";
 
 // NOTE: DEFINE ROUTES
 const router = createBrowserRouter([
