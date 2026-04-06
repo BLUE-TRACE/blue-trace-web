@@ -12,6 +12,7 @@ import DashboardStudent from "../pages/Student/DashboardStudent";
 import AttendanceStudent from "../pages/Student/AttendanceStudent";
 
 // NOTE: IMPORT ADMIN PAGES
+import AdminDashboard from "../pages/Admin/AdminDashboard";
 
 // NOTE: IMPORT AUTH PAGES
 import SignIn from "../pages/Login/SignIn";
@@ -40,7 +41,10 @@ const router = createBrowserRouter([
         path: "/student/attendance",
         element: <AttendanceStudent />,
       },
-
+      {
+        path: "/admin/dashboard",
+        element: <AdminDashboard />,
+      },
     ],
   },
   // AUTH ROUTES
