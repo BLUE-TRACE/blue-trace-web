@@ -1,6 +1,6 @@
-import LectureDetailCard from "../components/LectureDetailCard";
-import Table from "../components/Table";
-import DashboardSummary from "../components/DashboardSummary";
+import LectureDetailCard from "../../components/LectureDetailCard";
+import Table from "../../components/Table";
+import DashboardSummary from "../../components/DashboardSummary";
 
 const ReportLecturer = () => {
     const columns = [
@@ -31,11 +31,11 @@ const data = [
       
       {/* Filters */}
       <div className="flex gap-4 mb-4">
-        <select className="bg-gray-700 p-2 rounded">
+        <select className="p-2 bg-gray-700 rounded">
           <option>Select Academic Year</option>
         </select>
 
-        <select className="bg-gray-700 p-2 rounded">
+        <select className="p-2 bg-gray-700 rounded">
           <option>Select Lecture</option>
         </select>
       </div>

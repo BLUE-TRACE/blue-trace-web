@@ -1,5 +1,5 @@
-import StudentReportCard from "../components/StudentReportCard";
-import LectureDetailCard from "../components/LectureDetailCard";
+import StudentReportCard from "../../components/StudentReportCard";
+import LectureDetailCard from "../../components/LectureDetailCard";
 
 const subjects = [
   {

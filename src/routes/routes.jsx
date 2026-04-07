@@ -6,13 +6,13 @@ import { createBrowserRouter } from "react-router-dom";
 // NOTE: IMPORT LECTURER PAGES
 import Dashboard from "../pages/Lecturer/Dashboard";
 import AttendanceMark from "../pages/Lecturer/AttendanceMark";
-import ReportLecturer from "../pages/ReportLecturer";
+import ReportLecturer from "../pages/Lecturer/ReportLecturer";
 
 
 // NOTE: IMPORT STUDENT PAGES
 import DashboardStudent from "../pages/Student/DashboardStudent";
 import AttendanceStudent from "../pages/Student/AttendanceStudent";
-import ReportStudent from "../pages/ReportStudent";
+import ReportStudent from "../pages/Student/ReportStudent";
 
 // NOTE: IMPORT ADMIN PAGES
 import AdminDashboard from "../pages/Admin/AdminDashboard";
