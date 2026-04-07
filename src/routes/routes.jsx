@@ -6,10 +6,13 @@ import { createBrowserRouter } from "react-router-dom";
 // NOTE: IMPORT LECTURER PAGES
 import Dashboard from "../pages/Lecturer/Dashboard";
 import AttendanceMark from "../pages/Lecturer/AttendanceMark";
+import ReportLecturer from "../pages/ReportLecturer";
+
 
 // NOTE: IMPORT STUDENT PAGES
 import DashboardStudent from "../pages/Student/DashboardStudent";
 import AttendanceStudent from "../pages/Student/AttendanceStudent";
+import ReportStudent from "../pages/ReportStudent";
 
 // NOTE: IMPORT ADMIN PAGES
 import AdminDashboard from "../pages/Admin/AdminDashboard";
@@ -27,6 +30,13 @@ const router = createBrowserRouter([
         index: true,
         element: <Dashboard />,
       },
+      {
+        path: "report/lecturer",
+        element: <ReportLecturer />,
+      },
+      {
+        path: "report/student",
+        element: <ReportStudent />,
       // LECTURER ROUTES
       {
         path: "/lecturer/attendance-mark",
@@ -53,5 +63,4 @@ const router = createBrowserRouter([
     element: <SignIn />,
   }
 ]);
-
 export default router;
