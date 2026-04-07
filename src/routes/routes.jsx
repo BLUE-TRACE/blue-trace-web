@@ -38,13 +38,14 @@ const router = createBrowserRouter([
         path: "/lecturer/timetable",
         element: <TimeTablePage />,
       },
-
+      {
         path: "report/lecturer",
         element: <ReportLecturer />,
       },
       {
         path: "report/student",
         element: <ReportStudent />,
+      },
       // LECTURER ROUTES
       {
         path: "/lecturer/attendance-mark",
@@ -62,8 +63,8 @@ const router = createBrowserRouter([
       {
         path: "/student/timetable",
         element: <StudentTimeTable />,
-},
-
+      },
+      {
         path: "/admin/dashboard",
         element: <AdminDashboard />,
       },
