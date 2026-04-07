@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import DateTimeWidget from "../components/DateTimeWidget";
-import LectureDetailCard from "../components/LectureDetailCard";
+import DateTimeWidget from "../../components/DateTimeWidget";
+import LectureDetailCard from "../../components/LectureDetailCard";
 import { MoreVertical } from "lucide-react";
-import Table from "../components/Table";
-import DashboardSummary from "../components/DashboardSummary";
-import "../App.css";
+import Table from "../../components/Table";
+import DashboardSummary from "../../components/DashboardSummary";
+import "../../App.css";
 
 const Dashboard = () => {
   // 1. Define the dynamic columns
@@ -103,21 +103,20 @@ const Dashboard = () => {
 
   return (
     <>
-      <div>
-        <div className="flex flex-row justify-between">
+      <div className="mx-16">
+        <div className="mb-10 text-2xl font-medium text-start">Hi, Dr. Isuru</div>
+        <div className="flex flex-col justify-between gap-10 lg:flex-row">
           <DateTimeWidget />
           <LectureDetailCard />
         </div>
 
-        <div className="min-h-screen p-8 bg-black">
+        <div className="pb-10 mt-10">
           <Table
             title="Today's Timetable"
             columns={tableColumns}
             data={timetableData}
           />
         </div>
-
-        <div><DashboardSummary /></div>
       </div>
     </>
   );

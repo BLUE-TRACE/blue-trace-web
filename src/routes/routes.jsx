@@ -2,10 +2,23 @@
 import React from "react";
 import Root from "../Layout/Root";
 import { createBrowserRouter } from "react-router-dom";
-import Dashboard from "../pages/Dashboard";
+
+// NOTE: IMPORT LECTURER PAGES
+import Dashboard from "../pages/Lecturer/Dashboard";
+import AttendanceMark from "../pages/Lecturer/AttendanceMark";
 import ReportLecturer from "../pages/ReportLecturer";
+
+
+// NOTE: IMPORT STUDENT PAGES
+import DashboardStudent from "../pages/Student/DashboardStudent";
+import AttendanceStudent from "../pages/Student/AttendanceStudent";
 import ReportStudent from "../pages/ReportStudent";
 
+// NOTE: IMPORT ADMIN PAGES
+import AdminDashboard from "../pages/Admin/AdminDashboard";
+
+// NOTE: IMPORT AUTH PAGES
+import SignIn from "../pages/Login/SignIn";
 
 // NOTE: DEFINE ROUTES
 const router = createBrowserRouter([
@@ -24,8 +37,30 @@ const router = createBrowserRouter([
       {
         path: "report/student",
         element: <ReportStudent />,
+      // LECTURER ROUTES
+      {
+        path: "/lecturer/attendance-mark",
+        element: <AttendanceMark />,
+      },
+      // STUDENT ROUTES
+      {
+        path: "/student",
+        element: <DashboardStudent />,
+      },
+      {
+        path: "/student/attendance",
+        element: <AttendanceStudent />,
+      },
+      {
+        path: "/admin/dashboard",
+        element: <AdminDashboard />,
       },
     ],
   },
+  // AUTH ROUTES
+  {
+    path: "/signin",
+    element: <SignIn />,
+  }
 ]);
 export default router;

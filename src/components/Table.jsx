@@ -6,7 +6,7 @@ const Table = ({ title, columns, data }) => {
       
       {/* Table Title */}
       {title && (
-        <h2 className="mb-6 text-xl font-bold text-white">{title}</h2>
+        <h2 className="mb-10 text-xl font-bold text-white text-start">{title}</h2>
       )}
 
       {/* Responsive Wrapper */}

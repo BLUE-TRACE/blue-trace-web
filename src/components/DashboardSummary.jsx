@@ -1,6 +1,5 @@
 import React from 'react';
 import { ExternalLink } from 'lucide-react';
-import Dashboard from '../pages/Dashboard';
 
 
 // Reusable component for the statistics rows

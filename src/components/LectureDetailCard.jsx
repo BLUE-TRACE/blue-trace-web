@@ -21,7 +21,7 @@ const LectureDetailCard = ({
   minutesLeft = "minutes left",
 }) => {
   return (
-    <div className="w-full max-w-222 mx-auto bg-[#050505] p-6 sm:p-8 rounded-xl font-sans">
+    <div className="w-full mx-auto bg-[#050505] px-6 sm:px-8 rounded-xl font-sans py-0">
       {/* Header */}
       <h2 className="mb-6 text-lg font-bold text-white">{title}</h2>
 
@@ -29,8 +29,8 @@ const LectureDetailCard = ({
       <div className="grid items-end grid-cols-1 gap-6 md:grid-cols-12 md:gap-4">
         
         {/* Column 1: Course Code & Start Time */}
-        <div className="flex flex-col gap-5 md:col-span-4">
-          <h3 className="text-xl tracking-wide text-white">{courseCodevalue}</h3>
+        <div className="flex flex-col gap-8 md:col-span-4">
+          <h3 className="text-xl tracking-wide text-white">{courseCode}</h3>
           <div>
             <p className="mb-2 text-sm text-gray-400">{startTime}</p>
             <div className="bg-[#141414] text-gray-200 px-4 py-3 rounded-lg w-full md:w-[90%] text-sm">
@@ -59,9 +59,9 @@ const LectureDetailCard = ({
           <p className="px-2 mb-4 text-xs text-center text-gray-300">
             Your lecture will be ready to start in {minutesLeftvalue} minutes.
           </p>
-          <button className="w-full bg-[#008B8B] hover:bg-[#007777] transition-colors text-white font-medium py-3 px-4 rounded-lg">
+          <div className="w-full cursor-pointer bg-[#008B8B] hover:bg-[#007777] transition-colors text-white font-medium py-3 px-4 rounded-lg">
             Start Now
-          </button>
+          </div>
         </div>
   ) }
       </div>

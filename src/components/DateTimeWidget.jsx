@@ -2,12 +2,12 @@ import React from 'react';
 import { Sun } from 'lucide-react';
 
 const DateTimeWidget = ({ 
-  time = "08 : 15 : 13", 
+  time = "08 : 15", 
   day = "Today", 
   date = "Thu, 6 Feb" 
 }) => {
   return (
-    <div className="flex flex-col justify-between p-8 bg-[#2C2C2C] text-white w-96 h-55 rounded-md shadow-md font-sans border border-transparent">
+    <div className="flex flex-col justify-between p-8 bg-[#2C2C2C] text-white w-full md:min-w-100 lg:w-100 h-55 rounded-md shadow-md font-sans border border-transparent">
       
       {/* Top Section: Icon */}
       <div>
@@ -15,7 +15,7 @@ const DateTimeWidget = ({
       </div>
 
       {/* Bottom Section: Date & Time */}
-      <div className="flex justify-between items-end">
+      <div className="flex items-end justify-between">
         
         {/* Left Side: Day & Date */}
         <div className="flex flex-col gap-2">
@@ -24,7 +24,7 @@ const DateTimeWidget = ({
         </div>
 
         {/* Right Side: Time */}
-        <div className="text-2xl tracking-widest font-light pb-1">
+        <div className="pb-1 text-2xl font-light tracking-widest">
           {time}
         </div>
         
