@@ -2,6 +2,13 @@
 import React from "react";
 import Root from "../Layout/Root";
 import { createBrowserRouter } from "react-router-dom";
+<<<<<<< Updated upstream
+=======
+import Dashboard from "../pages/Dashboard";
+import ReportLecturer from "../pages/ReportLecturer";
+import ReportStudent from "../pages/ReportStudent";
+import RealTimeMonitoring from "../pages/Admin/RealTimeMonitoring";
+>>>>>>> Stashed changes
 
 // NOTE: IMPORT LECTURER PAGES
 import Dashboard from "../pages/Lecturer/Dashboard";
@@ -44,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/dashboard",
         element: <AdminDashboard />,
+      },
+      {
+        path: "admin/real-time-monitoring",
+        element: <RealTimeMonitoring />,
       },
     ],
   },
