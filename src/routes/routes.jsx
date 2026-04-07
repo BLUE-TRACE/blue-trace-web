@@ -20,6 +20,10 @@ import AdminDashboard from "../pages/Admin/AdminDashboard";
 // NOTE: IMPORT AUTH PAGES
 import SignIn from "../pages/Login/SignIn";
 
+import TimeTablePage from "../pages/Lecturer/TimeTablePage";
+
+import StudentTimeTable from "../pages/Student/StudentTimeTable";
+
 // NOTE: DEFINE ROUTES
 const router = createBrowserRouter([
   {
@@ -31,6 +35,10 @@ const router = createBrowserRouter([
         element: <Dashboard />,
       },
       {
+        path: "/lecturer/timetable",
+        element: <TimeTablePage />,
+      },
+
         path: "report/lecturer",
         element: <ReportLecturer />,
       },
@@ -52,6 +60,10 @@ const router = createBrowserRouter([
         element: <AttendanceStudent />,
       },
       {
+        path: "/student/timetable",
+        element: <StudentTimeTable />,
+},
+
         path: "/admin/dashboard",
         element: <AdminDashboard />,
       },

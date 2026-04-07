@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   FaCalendarAlt,
   FaBell,
@@ -16,13 +17,14 @@ import {
 const Navbar = () => {
   const [activeTab, setActiveTab] = useState("Dashboard");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // State for mobile menu
+  const navigate = useNavigate();
 
   const tabs = [
-    { name: "Dashboard", icon: <MdDashboard size={20} /> },
-    { name: "Timetable", icon: <MdSchedule size={20} /> },
-    { name: "Attendance", icon: <MdAssignmentTurnedIn size={20} /> },
-    { name: "Report", icon: <MdReport size={20} /> },
-  ];
+  { name: "Dashboard", icon: <MdDashboard size={20} />, path: "/" },
+  { name: "Timetable", icon: <MdSchedule size={20} />, path: "/lecturer/timetable" },
+  { name: "Attendance", icon: <MdAssignmentTurnedIn size={20} />, path: "/lecturer/attendance-mark" },
+  { name: "Report", icon: <MdReport size={20} />, path: "/lecturer/report" },
+];
 
   return (
     <nav className="bg-gray-900 text-gray-100 px-6 md:px-2 lg:px-6 py-4 flex flex-wrap justify-between items-center relative z-50">
@@ -68,6 +70,7 @@ const Navbar = () => {
               }`}
               onClick={() => {
                 setActiveTab(tab.name);
+                navigate(tab.path);
                 setIsMobileMenuOpen(false); // Auto-close menu on mobile after selection
               }}
             >
