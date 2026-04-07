@@ -6,15 +6,19 @@ import { createBrowserRouter } from "react-router-dom";
 // NOTE: IMPORT LECTURER PAGES
 import Dashboard from "../pages/Lecturer/Dashboard";
 import AttendanceMark from "../pages/Lecturer/AttendanceMark";
+import ReportLecturer from "../pages/ReportLecturer";
+
 
 // NOTE: IMPORT STUDENT PAGES
 import DashboardStudent from "../pages/Student/DashboardStudent";
 import AttendanceStudent from "../pages/Student/AttendanceStudent";
+import ReportStudent from "../pages/ReportStudent";
 
 // NOTE: IMPORT ADMIN PAGES
+import AdminDashboard from "../pages/Admin/AdminDashboard";
 
 // NOTE: IMPORT AUTH PAGES
-import SignIn from "../pages/Login/Signin";
+import SignIn from "../pages/Login/SignIn";
 
 import TimeTablePage from "../pages/Lecturer/TimeTablePage";
 
@@ -35,6 +39,12 @@ const router = createBrowserRouter([
         element: <TimeTablePage />,
       },
 
+        path: "report/lecturer",
+        element: <ReportLecturer />,
+      },
+      {
+        path: "report/student",
+        element: <ReportStudent />,
       // LECTURER ROUTES
       {
         path: "/lecturer/attendance-mark",
@@ -54,6 +64,9 @@ const router = createBrowserRouter([
         element: <StudentTimeTable />,
 },
 
+        path: "/admin/dashboard",
+        element: <AdminDashboard />,
+      },
     ],
   },
   // AUTH ROUTES
@@ -62,5 +75,4 @@ const router = createBrowserRouter([
     element: <SignIn />,
   }
 ]);
-
 export default router;
