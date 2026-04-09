@@ -177,6 +177,19 @@ const Navbar = () => {
                 >
                   Logout
                 </button>
+
+                {user?.role === "student" && (
+                <button
+                  onClick={() => {
+                    navigate("/student/profile");
+                    setActiveTab(""); 
+                    setIsUserMenuOpen(false);
+                  }}
+                  className="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 transition-colors"
+                >
+                  My Profile
+                </button>
+                 ) }
               </div>
             )}
           </div>

@@ -16,6 +16,7 @@ import DashboardStudent from "../pages/Student/DashboardStudent";
 import AttendanceStudent from "../pages/Student/AttendanceStudent";
 import StudentTimeTable from "../pages/Student/StudentTimeTable";
 import ReportStudent from "../pages/Student/ReportStudent";
+import Profile from "../pages/Student/Profile";
 
 // NOTE: IMPORT ADMIN PAGES
 import AdminDashboard from "../pages/Admin/AdminDashboard";
@@ -50,6 +51,7 @@ const router = createBrowserRouter([
       { path: "timetable", element: <StudentTimeTable /> },
       { path: "attendance", element: <AttendanceStudent /> },
       { path: "report", element: <ReportStudent /> },
+      { path: "profile", element: <Profile /> },
     ],
   },
   // ADMIN ROUTES
