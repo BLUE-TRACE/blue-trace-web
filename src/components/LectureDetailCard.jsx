@@ -2,6 +2,8 @@ import React from 'react';
 
 const LectureDetailCard = ({
 
+  role = "student", // or "lecturer"
+
   title = "Next Lecture",
   showCountdown = true,  
 
@@ -59,9 +61,9 @@ const LectureDetailCard = ({
           <p className="px-2 mb-4 text-xs text-center text-gray-300">
             Your lecture will be ready to start in {minutesLeftvalue} minutes.
           </p>
-          <div className="w-full cursor-pointer bg-[#008B8B] hover:bg-[#007777] transition-colors text-white font-medium py-3 px-4 rounded-lg">
-            Start Now
-          </div>
+          {role === "lecturer" && (
+            <div className="w-full cursor-pointer bg-[#008B8B] hover:bg-[#007777] transition-colors text-white font-medium py-3 px-4 rounded-lg"> Start Session </div>
+          ) }
         </div>
   ) }
       </div>

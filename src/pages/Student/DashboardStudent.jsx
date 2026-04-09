@@ -1,12 +1,17 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { MoreVertical } from "lucide-react";
 import DateTimeWidget from "../../components/DateTimeWidget";
 import LectureDetailCard from "../../components/LectureDetailCard";
-import { MoreVertical } from "lucide-react";
 import Table from "../../components/Table";
-import DashboardSummary from "../../components/DashboardSummary";
 import "../../App.css";
 
 const DashboardStudent = () => {
+
+  const { user } = useSelector((state) => state.auth);
+  const [studentName, setStudentName] = useState(user?.username ? user?.username : "Student");
+  const role = user?.role ? user?.role : "student";
+
   // 1. Define the dynamic columns
   const tableColumns = [
     {
@@ -104,10 +109,10 @@ const DashboardStudent = () => {
   return (
     <>
       <div className="mx-16">
-        <div className="mb-10 text-2xl font-medium text-start">Hi, Rusiru</div>
+        <div className="mb-10 text-2xl font-medium text-start">Hi, {studentName}</div>
         <div className="flex flex-col justify-between gap-10 lg:flex-row">
           <DateTimeWidget />
-          <LectureDetailCard />
+          <LectureDetailCard role={role} />
         </div>
 
         <div className="pb-10 mt-10">

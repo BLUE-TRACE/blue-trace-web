@@ -48,7 +48,7 @@ const StudentTimeTable = () => {
   ];
 
   return (
-    <div className="px-10 py-6 text-white">
+    <div className="mx-16 text-white">
       {/* Title */}
       <h1 className="text-2xl font-semibold mb-6">Student Timetable</h1>
 
@@ -88,7 +88,7 @@ const StudentTimeTable = () => {
           {timetableData.map((item, index) => (
             <div
               key={index}
-              className={`grid grid-cols-4 items-center p-4 rounded-xl transition ${
+              className={`grid grid-cols-4 items-center p-4 rounded-xl transition text-center ${
                 item.status === "Ongoing"
                   ? "bg-white/5 border border-green-500/20"
                   : "hover:bg-white/5"
@@ -99,7 +99,7 @@ const StudentTimeTable = () => {
               <span className="text-gray-300">{item.hall}</span>
 
               <span
-                className={`px-3 py-1 text-xs rounded-full w-fit ${getStatusStyle(
+                className={`px-3 py-1 text-xs rounded-full w-fit mx-auto text-center ${getStatusStyle(
                   item.status
                 )}`}
               >
