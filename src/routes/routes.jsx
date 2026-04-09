@@ -19,6 +19,7 @@ import AdminDashboard from "../pages/Admin/AdminDashboard";
 
 // NOTE: IMPORT AUTH PAGES
 import SignIn from "../pages/Login/SignIn";
+import SignUp from "../pages/Login/SignUp";
 
 import TimeTablePage from "../pages/Lecturer/TimeTablePage";
 
@@ -74,6 +75,10 @@ const router = createBrowserRouter([
   {
     path: "/signin",
     element: <SignIn />,
-  }
+  },
+  {
+    path: "/signup",
+    element: <SignUp />,
+  },
 ]);
 export default router;
