@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { loginUser } from "../../store/thunks/authThunks";
 
 const SignIn = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { loading, error } = useSelector((state) => state.auth);
+
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
@@ -13,10 +20,32 @@ const SignIn = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add login logic here
-    console.log("Login attempted with:", formData); // for testing purposes
+
+    try {
+      const response = await dispatch(loginUser(formData)).unwrap();
+      const role = response?.user?.role;
+
+      if (role === "admin") {
+        navigate("/admin/dashboard");
+        return;
+      }
+
+      if (role === "lecturer") {
+        navigate("/lecturer");
+        return;
+      }
+
+      if (role === "student") {
+        navigate("/student");
+        return;
+      }
+
+      navigate("/");
+    } catch (err) {
+      console.error("Login failed:", err);
+    }
   };
 
   return (
@@ -64,13 +93,18 @@ const SignIn = () => {
             </button>
           </div>
 
+          {error && (
+            <p className="text-sm text-red-400">{error}</p>
+          )}
+
           {/* Log In Button */}
-          <div
+          <button
             type="submit"
-            className="cursor-pointer w-full bg-[#008B8B] hover:bg-[#007777] text-white font-semibold text-lg py-3.5 rounded mt-4 transition-colors tracking-wide"
+            disabled={loading}
+            className="cursor-pointer w-full bg-[#008B8B] hover:bg-[#007777] disabled:bg-[#2b6666] text-white font-semibold text-lg py-3.5 rounded mt-4 transition-colors tracking-wide"
           >
-            Log in
-          </div>
+            {loading ? "Signing in..." : "Log in"}
+          </button>
         </form>
 
         <div className="mt-8 text-sm tracking-wide text-gray-300 transition-colors cursor-pointer hover:text-white focus:outline-none">
