@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
 import {
   FaCalendarAlt,
   FaBell,
@@ -13,18 +14,79 @@ import {
   MdAssignmentTurnedIn,
   MdReport,
 } from "react-icons/md";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
+  const { user } = useSelector((state) => state.auth);
+  const role = user?.role;
+
   const [activeTab, setActiveTab] = useState("Dashboard");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // State for mobile menu
   const navigate = useNavigate();
 
-  const tabs = [
-  { name: "Dashboard", icon: <MdDashboard size={20} />, path: "/" },
-  { name: "Timetable", icon: <MdSchedule size={20} />, path: "/lecturer/timetable" },
-  { name: "Attendance", icon: <MdAssignmentTurnedIn size={20} />, path: "/lecturer/attendance-mark" },
-  { name: "Report", icon: <MdReport size={20} />, path: "/lecturer/report" },
-];
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+
+  const menuRef = useRef();
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setIsUserMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const roleTabs = {
+    lecturer: [
+      { name: "Dashboard", icon: <MdDashboard size={20} />, path: "/lecturer" },
+      {
+        name: "Timetable",
+        icon: <MdSchedule size={20} />,
+        path: "/lecturer/timetable",
+      },
+      {
+        name: "Attendance",
+        icon: <MdAssignmentTurnedIn size={20} />,
+        path: "/lecturer/attendance-mark",
+      },
+      {
+        name: "Report",
+        icon: <MdReport size={20} />,
+        path: "/lecturer/report",
+      },
+    ],
+    student: [
+      { name: "Dashboard", icon: <MdDashboard size={20} />, path: "/student" },
+      {
+        name: "Timetable",
+        icon: <MdSchedule size={20} />,
+        path: "/student/timetable",
+      },
+      {
+        name: "Attendance",
+        icon: <MdAssignmentTurnedIn size={20} />,
+        path: "/student/attendance",
+      },
+      { name: "Report", icon: <MdReport size={20} />, path: "/student/report" },
+    ],
+    admin: [
+      {
+        name: "Dashboard",
+        icon: <MdDashboard size={20} />,
+        path: "/admin/dashboard",
+      },
+    ],
+  };
+
+  const tabs = roleTabs[role] || [student];
+
+  const handleLogout = () => {
+    localStorage.clear(); // remove token + user
+    navigate("/signin");
+  };
 
   return (
     <nav className="bg-gray-900 text-gray-100 px-6 md:px-2 lg:px-6 py-4 flex flex-wrap justify-between items-center relative z-50">
@@ -89,9 +151,35 @@ const Navbar = () => {
           <button className="m-0 p-0 bg-transparent border-none text-gray-300 hover:text-cyan-400 cursor-pointer transition-colors">
             <FaBell size={18} />
           </button>
-          <button className="bg-transparent border-none text-gray-300 hover:text-cyan-400 cursor-pointer transition-colors">
+          {/* <button className="bg-transparent border-none text-gray-300 hover:text-cyan-400 cursor-pointer transition-colors">
             <FaUserCircle size={20} />
-          </button>
+          </button> */}
+          <div className="relative" ref={menuRef}>
+            <button
+              onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+              className="bg-transparent border-none text-gray-300 hover:text-cyan-400 cursor-pointer transition-colors"
+            >
+              <FaUserCircle size={20} />
+            </button>
+
+            {/* Dropdown */}
+            {isUserMenuOpen && (
+              <div className="absolute right-0 mt-3 w-40 bg-gray-800 rounded-md shadow-lg border border-gray-700 z-50">
+                {/* User Info (optional) */}
+                <div className="px-4 py-2 text-sm text-gray-300 border-b border-gray-700">
+                  {user?.username || "User"}
+                </div>
+
+                {/* Logout */}
+                <button
+                  onClick={handleLogout}
+                  className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-700 transition-colors"
+                >
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </nav>

@@ -35,20 +35,20 @@ const router = createBrowserRouter([
         index: true,
         element: <Dashboard />,
       },
+      // LECTURER ROUTES
+      {
+        path: "/lecturer",
+        element: <Dashboard />,
+      },
       {
         path: "/lecturer/timetable",
         element: <TimeTablePage />,
       },
       {
-        path: "report/lecturer",
+        path: "/lecturer/report",
         element: <ReportLecturer />,
       },
-      {
-        path: "report/student",
-        element: <ReportStudent />,
-      },
-      // LECTURER ROUTES
-      {
+            {
         path: "/lecturer/attendance-mark",
         element: <AttendanceMark />,
       },
@@ -65,6 +65,11 @@ const router = createBrowserRouter([
         path: "/student/timetable",
         element: <StudentTimeTable />,
       },
+      {
+        path: "/student/report",
+        element: <ReportStudent />,
+      },
+      // ADMIN ROUTES
       {
         path: "/admin/dashboard",
         element: <AdminDashboard />,

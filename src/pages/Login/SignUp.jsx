@@ -28,6 +28,11 @@ const SignUp = () => {
   };
 
   const handleSubmit = async (e) => {
+    
+    if (formData?.role !== "student") {
+        formData.yearLevel = null; // Clear yearLevel for non-students
+    }
+    
     console.log("Form submitted with data:", formData);
     e.preventDefault();
     setLocalError("");
@@ -45,7 +50,7 @@ const SignUp = () => {
           password: formData.password,
           role: formData.role,
           yearLevel: formData.yearLevel,
-        })
+        }),
       ).unwrap();
 
       console.log("Signup successful");
@@ -58,7 +63,6 @@ const SignUp = () => {
   return (
     <div className="flex items-center justify-center min-h-screen p-4 font-sans bg-black">
       <div className="w-full max-w-150 bg-[#2A2A2A] rounded-md p-8 sm:p-14 md:px-20 md:py-24 shadow-2xl flex flex-col items-center">
-
         {/* Title */}
         <h1 className="mb-12 text-4xl font-bold tracking-wide text-white sm:text-5xl">
           BlueTrace
@@ -66,7 +70,6 @@ const SignUp = () => {
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="flex flex-col w-full gap-6">
-
           {/* Username */}
           <input
             type="text"
@@ -119,18 +122,20 @@ const SignUp = () => {
           </div>
 
           {/* yearLevel */}
-          <select
-            name="yearLevel"
-            value={formData.yearLevel}
-            onChange={handleInputChange}
-            className="w-full bg-zinc-800 border border-gray-400 text-white px-4 py-3.5 rounded focus:outline-none focus:border-[#008B8B]"
-            required
-          >
-            <option value={1}>Level 1</option>
-            <option value={2}>Level 2</option>
-            <option value={3}>Level 3</option>
-            <option value={4}>Level 4</option>
-          </select>
+          {formData.role === "student" && (
+            <select
+              name="yearLevel"
+              value={formData.yearLevel}
+              onChange={handleInputChange}
+              className="w-full bg-zinc-800 border border-gray-400 text-white px-4 py-3.5 rounded focus:outline-none focus:border-[#008B8B]"
+              required
+            >
+              <option value={1}>Level 1</option>
+              <option value={2}>Level 2</option>
+              <option value={3}>Level 3</option>
+              <option value={4}>Level 4</option>
+            </select>
+          )}
 
           {/* Role */}
           <select
@@ -164,7 +169,11 @@ const SignUp = () => {
           onClick={() => navigate("/")}
           className="mt-8 text-sm text-gray-300 cursor-pointer hover:text-white"
         >
-          Already have an account? Log in
+          Already have an account?{" "}
+          <a href="/signin" className="text-cyan-400 hover:text-cyan-300">
+            {" "}
+            Log in{" "}
+          </a>
         </div>
       </div>
     </div>
