@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import {
   FaCalendarAlt,
@@ -20,9 +20,9 @@ const Navbar = () => {
   const { user } = useSelector((state) => state.auth);
   const role = user?.role;
 
-  const [activeTab, setActiveTab] = useState("Dashboard");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // State for mobile menu
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
@@ -76,12 +76,19 @@ const Navbar = () => {
       {
         name: "Dashboard",
         icon: <MdDashboard size={20} />,
-        path: "/admin/dashboard",
+        path: "/admin",
       },
     ],
   };
 
-  const tabs = roleTabs[role] || [student];
+  const tabs = roleTabs[role] || [];
+
+  const isTabActive = (tabPath) => {
+    if (location.pathname === tabPath) return true;
+
+    // Match nested routes like /lecturer/attendance-mark/:id while keeping dashboard exact.
+    return tabPath !== `/${role}` && location.pathname.startsWith(`${tabPath}/`);
+  };
 
   const handleLogout = () => {
     localStorage.clear(); // remove token + user
@@ -126,12 +133,11 @@ const Navbar = () => {
             <li
               key={tab.name}
               className={`flex items-center gap-2 w-full md:w-auto px-3 py-3 md:py-2 cursor-pointer transition-colors duration-200 rounded-md md:rounded-none md:border-t-2 ${
-                activeTab === tab.name
+                isTabActive(tab.path)
                   ? "text-cyan-400 md:border-cyan-400 bg-gray-800 md:bg-transparent"
                   : "text-gray-300 border-transparent hover:text-gray-100 hover:bg-gray-800 md:hover:bg-transparent"
               }`}
               onClick={() => {
-                setActiveTab(tab.name);
                 navigate(tab.path);
                 setIsMobileMenuOpen(false); // Auto-close menu on mobile after selection
               }}
@@ -182,7 +188,6 @@ const Navbar = () => {
                 <button
                   onClick={() => {
                     navigate("/student/profile");
-                    setActiveTab(""); 
                     setIsUserMenuOpen(false);
                   }}
                   className="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 transition-colors"
