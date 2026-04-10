@@ -1,21 +1,55 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { loginUser, registerUser } from "../thunks/authThunks";
 
+const getInitialAuthState = () => {
+  try {
+    const token = localStorage.getItem("authToken");
+    const storedUser = localStorage.getItem("authUser");
+    const user = storedUser ? JSON.parse(storedUser) : null;
+
+    if (!token || !user) {
+      return {
+        user: null,
+        token: null,
+        loading: false,
+        error: null,
+      };
+    }
+
+    return {
+      user,
+      token,
+      loading: false,
+      error: null,
+    };
+  } catch (error) {
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("authUser");
+
+    return {
+      user: null,
+      token: null,
+      loading: false,
+      error: null,
+    };
+  }
+};
+
 const authSlice = createSlice({
   name: "auth",
-  initialState: {
-    user: null,
-    token: null,
-    loading: false,
-    error: null,
-  },
+  initialState: getInitialAuthState(),
   reducers: {
     logout: (state) => {
       state.user = null;
       state.token = null;
       state.error = null;
+
+      // Clear auth data
       localStorage.removeItem("authToken");
       localStorage.removeItem("authUser");
+
+      // Clean up any active lecturer sessions from previous code!
+      localStorage.removeItem("sessionId");
     },
   },
   extraReducers: (builder) => {

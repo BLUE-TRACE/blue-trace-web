@@ -14,9 +14,11 @@ import {
   MdAssignmentTurnedIn,
   MdReport,
 } from "react-icons/md";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../store/slices/authSlice";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const role = user?.role;
 
@@ -91,23 +93,25 @@ const Navbar = () => {
   };
 
   const handleLogout = () => {
-    localStorage.clear(); // remove token + user
-    navigate("/signin");
+    dispatch(logout());
+    setIsUserMenuOpen(false);
+    setIsMobileMenuOpen(false);
+    navigate("/signin", { replace: true });
   };
 
   return (
-    <nav className="bg-gray-900 text-gray-100 px-6 md:px-2 lg:px-6 py-4 flex flex-wrap justify-between items-center relative z-50">
+    <nav className="relative z-50 flex flex-wrap items-center justify-between px-6 py-4 text-gray-100 bg-gray-900 md:px-2 lg:px-6">
       {/* Logo 1 */}
-      <div className="flex md:hidden items-center gap-2">
+      <div className="flex items-center gap-2 md:hidden">
         <div className="w-2.5 h-2.5 bg-cyan-400 rounded-full" />
-        <span className="font-bold text-2xl">BlueTrace</span>
+        <span className="text-2xl font-bold">BlueTrace</span>
       </div>
 
       {/* Mobile Menu Toggle Button */}
-      <div className="md:hidden flex items-center">
+      <div className="flex items-center md:hidden">
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="text-gray-100 hover:text-cyan-400 focus:outline-none transition-colors"
+          className="text-gray-100 transition-colors hover:text-cyan-400 focus:outline-none"
         >
           {isMobileMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
         </button>
@@ -120,15 +124,15 @@ const Navbar = () => {
         }`}
       >
         {/* Logo 2 */}
-        <div className="md:flex hidden items-center gap-2">
+        <div className="items-center hidden gap-2 md:flex">
           <div className="w-2.5 h-2.5 bg-cyan-400 rounded-full" />
-          <span className="font-bold text-lg md:text-xl lg:text-2xl">
+          <span className="text-lg font-bold md:text-xl lg:text-2xl">
             BlueTrace
           </span>
         </div>
 
         {/* Tabs */}
-        <ul className="flex flex-col md:flex-row items-start md:items-center gap-2 sm:gap-0 lg:gap-4 list-none m-0 p-0">
+        <ul className="flex flex-col items-start gap-2 p-0 m-0 list-none md:flex-row md:items-center sm:gap-0 lg:gap-4">
           {tabs.map((tab) => (
             <li
               key={tab.name}
@@ -149,28 +153,28 @@ const Navbar = () => {
         </ul>
 
         {/* Right icons */}
-        <div className="flex items-center gap-5 md:gap-2 lg:gap-5 mt-4 md:mt-0 pt-4 md:pt-0 border-t border-gray-700 md:border-none px-3 md:px-0">
+        <div className="flex items-center gap-5 px-3 pt-4 mt-4 border-t border-gray-700 md:gap-2 lg:gap-5 md:mt-0 md:pt-0 md:border-none md:px-0">
           {" "}
-          <button className="px-0 bg-transparent border-none text-gray-300 hover:text-cyan-400 cursor-pointer transition-colors">
+          <button className="px-0 text-gray-300 transition-colors bg-transparent border-none cursor-pointer hover:text-cyan-400">
             <FaCalendarAlt size={18} />
           </button>
-          <button className="m-0 p-0 bg-transparent border-none text-gray-300 hover:text-cyan-400 cursor-pointer transition-colors">
+          <button className="p-0 m-0 text-gray-300 transition-colors bg-transparent border-none cursor-pointer hover:text-cyan-400">
             <FaBell size={18} />
           </button>
-          {/* <button className="bg-transparent border-none text-gray-300 hover:text-cyan-400 cursor-pointer transition-colors">
+          {/* <button className="text-gray-300 transition-colors bg-transparent border-none cursor-pointer hover:text-cyan-400">
             <FaUserCircle size={20} />
           </button> */}
           <div className="relative" ref={menuRef}>
             <button
               onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-              className="bg-transparent border-none text-gray-300 hover:text-cyan-400 cursor-pointer transition-colors"
+              className="text-gray-300 transition-colors bg-transparent border-none cursor-pointer hover:text-cyan-400"
             >
               <FaUserCircle size={20} />
             </button>
 
             {/* Dropdown */}
             {isUserMenuOpen && (
-              <div className="absolute right-0 mt-3 w-40 bg-gray-800 rounded-md shadow-lg border border-gray-700 z-50">
+              <div className="absolute right-0 z-50 w-40 mt-3 bg-gray-800 border border-gray-700 rounded-md shadow-lg">
                 {/* User Info (optional) */}
                 <div className="px-4 py-2 text-sm text-gray-300 border-b border-gray-700">
                   {user?.username || "User"}
@@ -179,7 +183,7 @@ const Navbar = () => {
                 {/* Logout */}
                 <button
                   onClick={handleLogout}
-                  className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-700 transition-colors"
+                  className="w-full px-4 py-2 text-sm text-left text-red-400 transition-colors hover:bg-gray-700"
                 >
                   Logout
                 </button>
@@ -190,7 +194,7 @@ const Navbar = () => {
                     navigate("/student/profile");
                     setIsUserMenuOpen(false);
                   }}
-                  className="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 transition-colors"
+                  className="w-full px-4 py-2 text-sm text-left text-gray-300 transition-colors hover:bg-gray-700"
                 >
                   My Profile
                 </button>
