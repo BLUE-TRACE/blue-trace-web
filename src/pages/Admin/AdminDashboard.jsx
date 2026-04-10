@@ -110,7 +110,6 @@ const AdminDashboard = () => {
             <div className="grid grid-cols-2 gap-4">
               <QuickLinkBtn label="Add User" />
               <QuickLinkBtn label="Create Course" onClick={() => setIsModalOpen(true)} />
-              <QuickLinkBtn label="Create Course" />
               <QuickLinkBtn label="Generate Reports" />
               <QuickLinkBtn label="System Status" />
             </div>
