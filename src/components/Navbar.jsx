@@ -14,9 +14,11 @@ import {
   MdAssignmentTurnedIn,
   MdReport,
 } from "react-icons/md";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../store/slices/authSlice";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const role = user?.role;
 
@@ -91,8 +93,10 @@ const Navbar = () => {
   };
 
   const handleLogout = () => {
-    localStorage.clear(); // remove token + user
-    navigate("/signin");
+    dispatch(logout());
+    setIsUserMenuOpen(false);
+    setIsMobileMenuOpen(false);
+    navigate("/signin", { replace: true });
   };
 
   return (

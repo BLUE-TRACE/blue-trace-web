@@ -19,7 +19,6 @@ export const loginUser = createAsyncThunk(
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
   async (data, { rejectWithValue }) => {
-      console.log("Register thunk called with data:", data);
     try {
       return await apiClient(`${BASE_URL}/register`, {
         method: "POST",

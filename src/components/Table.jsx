@@ -32,7 +32,7 @@ const Table = ({ title, columns, data, message="No data found" }) => {
 
           {/* Table Body (Rows) */}
           <div className="flex flex-col gap-3">
-            {message && (
+            {data.length === 0 && (
               <div className="px-6 py-4 text-sm text-gray-400">
                 {message}
               </div>

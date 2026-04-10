@@ -33,7 +33,6 @@ const SignUp = () => {
         formData.yearLevel = null; // Clear yearLevel for non-students
     }
     
-    console.log("Form submitted with data:", formData);
     e.preventDefault();
     setLocalError("");
 
@@ -53,7 +52,6 @@ const SignUp = () => {
         }),
       ).unwrap();
 
-      console.log("Signup successful");
       navigate("/signin");
     } catch (err) {
       console.error("Signup failed:", err);
@@ -95,7 +93,7 @@ const SignUp = () => {
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"
+              className="absolute text-gray-400 -translate-y-1/2 right-4 top-1/2"
             >
               {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
             </button>
@@ -115,7 +113,7 @@ const SignUp = () => {
             <button
               type="button"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"
+              className="absolute text-gray-400 -translate-y-1/2 right-4 top-1/2"
             >
               {showConfirmPassword ? <Eye size={20} /> : <EyeOff size={20} />}
             </button>
