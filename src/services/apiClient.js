@@ -7,8 +7,6 @@ export const apiClient = async (url, options = {}) => {
     ...options,
   });
   
-  console.log("api response:", response);
-
   if (!response.ok) {
     let errorMessage = "API request failed";
 

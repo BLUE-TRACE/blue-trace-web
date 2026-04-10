@@ -121,7 +121,7 @@ const TimeTablePage = () => {
       </div>
 
       {/* Timetable Card */}
-      <div className="bg-[#1A1A1A] rounded-2xl p-6 shadow-lg min-h-64">
+      <div className="bg-[#1A1A1A] rounded-2xl p-6 shadow-lg min-h-100">
         <h2 className="mb-4 text-lg font-semibold">
           {selectedDay} Schedule
         </h2>
