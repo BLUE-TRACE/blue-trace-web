@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react"; // <-- ADD useState here
 import { 
   Users, UserCheck, GraduationCap, 
   BookOpen, School, Settings, 
@@ -8,7 +8,7 @@ import {
   AreaChart, Area, XAxis, YAxis, 
   CartesianGrid, Tooltip, ResponsiveContainer 
 } from "recharts";
-
+import CreateCourseModal from "../../components/CreateCoursemodal";
 // Mock Data for the Activity Chart
 const data = [
   { name: "Jan", activity: 100 },
@@ -20,6 +20,7 @@ const data = [
 ];
 
 const AdminDashboard = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <div className="min-h-screen p-8 font-sans text-white bg-black">
       {/* 1. System Overview Header */}
@@ -108,13 +109,14 @@ const AdminDashboard = () => {
             <h3 className="px-2 text-lg font-semibold">Quick links</h3>
             <div className="grid grid-cols-2 gap-4">
               <QuickLinkBtn label="Add User" />
-              <QuickLinkBtn label="Create Course" />
+              <QuickLinkBtn label="Create Course" onClick={() => setIsModalOpen(true)} />
               <QuickLinkBtn label="Generate Reports" />
               <QuickLinkBtn label="System Status" />
             </div>
           </div>
         </div>
       </div>
+      {isModalOpen && <CreateCourseModal onClose={() => setIsModalOpen(false)} />}
     </div>
   );
 };
@@ -140,8 +142,8 @@ const NotificationItem = ({ type, msg, sub }) => (
   </div>
 );
 
-const QuickLinkBtn = ({ label, icon }) => (
-  <button className="bg-[#008B8B] hover:bg-[#007777] text-white py-3 px-4 rounded-lg text-sm font-semibold transition-colors flex items-center justify-center gap-2">
+const QuickLinkBtn = ({ label, icon, onClick }) => (
+  <button onClick={onClick} className="bg-[#008B8B] hover:bg-[#007777] text-white py-3 px-4 rounded-lg text-sm font-semibold transition-colors flex items-center justify-center gap-2">
     {icon} {label}
   </button>
 );
