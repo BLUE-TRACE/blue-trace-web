@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Table = ({ title, columns, data }) => {
+const Table = ({ title, columns, data, message="No data found" }) => {
   return (
     <div className="w-full bg-[#2A2A2A] p-6 sm:p-8 rounded-xl font-sans">
       
@@ -32,6 +32,11 @@ const Table = ({ title, columns, data }) => {
 
           {/* Table Body (Rows) */}
           <div className="flex flex-col gap-3">
+            {message && (
+              <div className="px-6 py-4 text-sm text-gray-400">
+                {message}
+              </div>
+            )}
             {data.map((row, rowIndex) => (
               <div 
                 key={rowIndex}

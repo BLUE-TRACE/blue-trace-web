@@ -28,7 +28,7 @@ const SignIn = () => {
       const role = response?.user?.role;
 
       if (role === "admin") {
-        navigate("/admin/dashboard");
+        navigate("/admin");
         return;
       }
 
@@ -108,7 +108,9 @@ const SignIn = () => {
         </form>
 
         <div className="mt-8 text-sm tracking-wide text-gray-300 transition-colors cursor-pointer hover:text-white focus:outline-none">
-          Lost Password?
+          Lost Password? or <a href="/signup" className="text-cyan-400 hover:text-cyan-300">
+            Register
+          </a>
         </div>
       </div>
     </div>

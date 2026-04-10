@@ -1,9 +1,35 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const StudentTimeTable = () => {
+  const { user } = useSelector((state) => state.auth);
+
+  const [timetable, setTimetable] = useState({});
+  const [loading, setLoading] = useState(true);
+
   const [selectedDay, setSelectedDay] = useState("Monday");
 
   const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+
+  useEffect(() => {
+    const fetchTimetable = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:5000/api/timetable/${user?.id}`,
+        );
+
+        setTimetable(res.data.timetable);
+      } catch (err) {
+        console.error("Error fetching timetable:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (user?.id) fetchTimetable();
+  }, [user]);
 
   // Status styles (same as lecturer)
   const getStatusStyle = (status) => {
@@ -19,38 +45,12 @@ const StudentTimeTable = () => {
     }
   };
 
-  // ✅ Student-specific data
-  const timetableData = [
-    {
-      course: "SENG 1223",
-      time: "08:30 - 10:30",
-      hall: "A11 301",
-      status: "Finished",
-    },
-    {
-      course: "SENG 2241",
-      time: "10:30 - 12:30",
-      hall: "A11 302",
-      status: "Ongoing",
-    },
-    {
-      course: "SENG 3312",
-      time: "13:00 - 15:00",
-      hall: "A11 303",
-      status: "Not Yet Started",
-    },
-    {
-      course: "SENG 4455",
-      time: "15:30 - 17:00",
-      hall: "A11 304",
-      status: "Cancelled",
-    },
-  ];
+  const timetableData = timetable[selectedDay] || [];
 
   return (
-    <div className="px-10 py-6 text-white">
+    <div className="mx-16 text-white">
       {/* Title */}
-      <h1 className="text-2xl font-semibold mb-6">Student Timetable</h1>
+      <h1 className="mb-6 text-2xl font-semibold">Student Timetable</h1>
 
       {/* Day Selector */}
       <div className="flex justify-center gap-10 mb-6 text-sm md:text-base">
@@ -71,12 +71,10 @@ const StudentTimeTable = () => {
 
       {/* Card */}
       <div className="bg-[#1A1A1A] rounded-2xl p-6 shadow-lg">
-        <h2 className="text-lg font-semibold mb-4">
-          {selectedDay} Schedule
-        </h2>
+        <h2 className="mb-4 text-lg font-semibold">{selectedDay} Schedule</h2>
 
         {/* Header */}
-        <div className="grid grid-cols-4 text-gray-400 text-sm border-b border-gray-700 pb-3">
+        <div className="grid grid-cols-4 pb-3 text-sm text-gray-400 border-b border-gray-700">
           <span>Course</span>
           <span>Time</span>
           <span>Hall</span>
@@ -85,28 +83,23 @@ const StudentTimeTable = () => {
 
         {/* Rows */}
         <div className="mt-4 space-y-3">
-          {timetableData.map((item, index) => (
-            <div
-              key={index}
-              className={`grid grid-cols-4 items-center p-4 rounded-xl transition ${
-                item.status === "Ongoing"
-                  ? "bg-white/5 border border-green-500/20"
-                  : "hover:bg-white/5"
-              }`}
-            >
-              <span className="font-medium">{item.course}</span>
-              <span className="text-gray-300">{item.time}</span>
-              <span className="text-gray-300">{item.hall}</span>
+          {timetableData.map((item, index) => {
+            const status = item.is_cancelled ? "Cancelled" : "Not Yet Started"; // can improve later
 
-              <span
-                className={`px-3 py-1 text-xs rounded-full w-fit ${getStatusStyle(
-                  item.status
-                )}`}
-              >
-                {item.status}
-              </span>
-            </div>
-          ))}
+            return (
+              <div key={index} className="grid grid-cols-4 ...">
+                <span>{item.course_code}</span>
+                <span>
+                  {item.start_time} - {item.end_time}
+                </span>
+                <span>{item.hall}</span>
+
+                <span className={`... ${getStatusStyle(status)}`}>
+                  {status}
+                </span>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

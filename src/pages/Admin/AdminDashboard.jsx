@@ -108,8 +108,8 @@ const AdminDashboard = () => {
             <h3 className="px-2 text-lg font-semibold">Quick links</h3>
             <div className="grid grid-cols-2 gap-4">
               <QuickLinkBtn label="Add User" />
+              <QuickLinkBtn label="Create Course" />
               <QuickLinkBtn label="Generate Reports" />
-              <QuickLinkBtn label="Database Backup" icon={<Database size={16}/>} />
               <QuickLinkBtn label="System Status" />
             </div>
           </div>

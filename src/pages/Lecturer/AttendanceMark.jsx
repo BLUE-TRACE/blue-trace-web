@@ -1,5 +1,7 @@
-import React from "react";
-import { Home } from "lucide-react"; // Using lucide-react for the little house/checkout icon
+import React, { useEffect } from "react";
+import { Home } from "lucide-react";
+import { useState } from "react";
+import axios from "axios";
 import AttendCard from "../../components/AttendCard";
 import Table from "../../components/Table";
 import AttendanceSummary from "../../components/AttendanceSummary";
@@ -7,6 +9,68 @@ import profile_pic from "../../assets/images/stu-profile-pic.jpg";
 import "../../App.css";
 
 const AttendanceMark = () => {
+  const [tracking, setTracking] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+
+  // sessionId from Dashboard page
+  const sessionId = localStorage.getItem("sessionId");
+
+  useEffect(() => {
+    let interval;
+
+    if (tracking && sessionId) {
+      interval = setInterval(async () => {
+        try {
+          const res = await axios.post("/api/scan", {
+            sessionId,
+            macAddresses: mockMacs,
+          });
+
+          console.log("Scan update:", res.data);
+        } catch (err) {
+          console.error(err);
+        }
+      }, 5000); // every 5 seconds
+    }
+
+    return () => clearInterval(interval);
+  }, [tracking, sessionId]);
+
+  const handleStartTracking = async () => {
+    if (!sessionId) {
+      setError("No active session. Start a session first.");
+      return;
+    }
+
+    setLoading(true);
+    setError("");
+    setMessage("");
+
+    try {
+      // TEMP: simulate scan data (until Python integration)
+      const mockMacs = ["3c:38:24:2f:a0:49", "AA:BB:CC:DD:EE:02"];
+
+      const res = await axios.post("http://localhost:5000/api/scan", {
+        sessionId: 11,
+        macAddresses: mockMacs,
+      });
+
+      setMessage(res.data.message);
+      setTracking(true);
+    } catch (err) {
+      setError(err.response?.data?.error || "Scan failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleStopTracking = () => {
+    setTracking(false);
+    setMessage("Tracking stopped.");
+  };
+
   const handleGenerateReport = (courseName) => {
     console.log(`Generating report for ${courseName}...`);
   };
@@ -14,6 +78,14 @@ const AttendanceMark = () => {
   const handleRowAction = (type) => {
     console.log(`Navigating to detailed view for: ${type}`);
   };
+
+  const date = "Thu, 6 Feb";
+  const courseCode = "SENG 12233";
+  const lectureNo = "Lecture 01";
+  const location = "Hall A11 301";
+  const startTime = "08:00 am";
+  const endTime = "10:00 am";
+  const countdown = "00:30:00";
 
   // 1. Define the columns tailored to this specific layout
   const tableColumns = [
@@ -24,11 +96,6 @@ const AttendanceMark = () => {
         <div className="flex items-center gap-3">
           {/* Avatar Placeholder */}
           <div className="w-10 h-10 overflow-hidden bg-gray-600 rounded-full shrink-0">
-            {/* <img 
-               src={`https://ui-avatars.com/api/?name=${row.name.replace(' ', '+')}&background=random`} 
-               alt={row.name}
-               className="object-cover w-full h-full"
-             /> */}
             <img
               src={profile_pic}
               alt={row.name}
@@ -129,7 +196,60 @@ const AttendanceMark = () => {
 
   return (
     <div className="mx-16">
-      <AttendCard />
+      <div className="w-full px-0 py-0 mx-auto font-sans bg-transparent rounded-xl">
+        <h3 className="mb-4 text-xl tracking-wide text-white text-start">
+          {date}
+        </h3>
+
+        {/* Main Content Layout */}
+        <div className="grid items-end grid-cols-1 gap-6 bg-shite md:grid-cols-12 md:gap-4">
+          {/* Column 1: Course Code & Start Time */}
+          <div className="flex flex-col gap-5 md:col-span-4">
+            <p className="text-white text-md">
+              {courseCode} - {lectureNo}
+            </p>
+            <div>
+              <p className="mb-2 text-sm text-gray-400">Start Time</p>
+              <div className="bg-[#141414] text-gray-200 px-4 py-3 rounded-lg w-full md:w-[90%] text-sm">
+                {startTime}
+              </div>
+            </div>
+          </div>
+
+          {/* Column 2: Hall & End Time */}
+          <div className="flex flex-col gap-5 md:col-span-4">
+            <h3 className="text-xl tracking-wide text-white ">{location}</h3>
+            <div>
+              <p className="mb-2 text-sm text-gray-400">End Time</p>
+              <div className="bg-[#141414] text-gray-200 px-4 py-3 rounded-lg w-full md:w-[90%] text-sm">
+                {endTime}
+              </div>
+            </div>
+          </div>
+
+          {/* Column 3: Timer & Action Button */}
+          <div className="flex flex-col items-center justify-end md:col-span-4 md:items-stretch">
+            <button
+              onClick={handleStartTracking}
+              disabled={loading || tracking}
+              className=" w-full cursor-pointer bg-[#008B8B] hover:bg-cyan-400 transition-colors text-white font-medium py-3 px-4 rounded-lg"
+            >
+              {loading ? "Starting..." : "Start Tracking"}
+            </button>
+
+            <button
+              onClick={handleStopTracking}
+              disabled={!tracking}
+              className="w-full mt-4 cursor-pointer bg-transparent border border-[#FF1010] text-[#FF1010] hover:bg-[#FF1010] hover:text-white transition-colors font-medium py-3 px-4 rounded-lg"
+            >
+              Stop Tracking
+            </button>
+
+            {message && <p className="text-green-400">{message}</p>}
+            {error && <p className="text-red-400">{error}</p>}
+          </div>
+        </div>
+      </div>
       <div className="flex items-center justify-center min-h-screen py-4 font-sans sm:py-8">
         <div className="flex flex-col justify-between w-full gap-10 lg:flex-row">
           <div className="w-full sm:mt-6 lg:max-w-2/3">
