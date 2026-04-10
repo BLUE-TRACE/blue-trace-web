@@ -7,12 +7,12 @@ const LectureDetailCard = ({
   role = "student", // or "lecturer"
   courseCodevalue,
   lecturerId,
+  startTimevalue,
+  endTimevalue,
+  locationvalue,
 
   title = "Next Lecture",
   showCountdown = true,
-  locationvalue = "Hall A11 301",
-  startTimevalue = "08:00 am",
-  endTimevalue = "10:00 am",
   countdownvalue = "00:30:00",
   minutesLeftvalue = 30,
 
@@ -105,18 +105,18 @@ const LectureDetailCard = ({
           <div>
             <p className="mb-2 text-sm text-gray-400">{startTime}</p>
             <div className="bg-[#141414] text-gray-200 px-4 py-3 rounded-lg w-full md:w-[90%] text-sm">
-              {startTimevalue}
+              {startTimevalue || "08:00"} 
             </div>
           </div>
         </div>
 
         {/* Column 2: Hall & End Time */}
         <div className="flex flex-col gap-5 md:col-span-4">
-          <h3 className="text-xl tracking-wide text-white">{locationvalue}</h3>
+          <h3 className="text-xl tracking-wide text-white">{locationvalue || "A11 301"}</h3>
           <div>
             <p className="mb-2 text-sm text-gray-400">{endTime}</p>
             <div className="bg-[#141414] text-gray-200 px-4 py-3 rounded-lg w-full md:w-[90%] text-sm">
-              {endTimevalue}
+              {endTimevalue || "10:00"}
             </div>
           </div>
         </div>
@@ -150,8 +150,8 @@ const LectureDetailCard = ({
               </div>
               
             )}
-            {message && <p className="text-green-400 mt-2 text-sm">{message}</p>}
-            {error && <p className="text-red-400 mt-2 text-sm">{error}</p>}
+            {/* {message && <p className="mt-2 text-sm text-green-400">{message}</p>} */}
+            {error && <p className="mt-2 text-sm text-red-400">{error}</p>}
           </div>
         )}
       </div>

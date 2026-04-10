@@ -7,10 +7,22 @@ import Table from "../../components/Table";
 import "../../App.css";
 
 const DashboardStudent = () => {
-
   const { user } = useSelector((state) => state.auth);
-  const [studentName, setStudentName] = useState(user?.username ? user?.username : "Student");
+  const [studentName, setStudentName] = useState(
+    user?.username ? user?.username : "Student",
+  );
   const role = user?.role ? user?.role : "student";
+
+  const [timetable, setTimetable] = useState({});
+
+  const getToday = () => {
+    return new Date().toLocaleDateString("en-US", { weekday: "long" });
+  };
+
+  const today = getToday();
+  const todayCourses = timetable[today] || [];
+
+  const nextLecture = todayCourses[0]; // simple version
 
   // 1. Define the dynamic columns
   const tableColumns = [
@@ -74,45 +86,44 @@ const DashboardStudent = () => {
     }
   };
 
-  // 3. Define the data
-  const timetableData = [
-    {
-      course: "SENG 1223",
-      startTime: "10:00:00",
-      endTime: "10:00:00",
-      hall: "A11 301",
-      status: "Finished",
-    },
-    {
-      course: "SENG 1223",
-      startTime: "10:00:00",
-      endTime: "10:00:00",
-      hall: "A11 301",
-      status: "Cancelled",
-    },
-    {
-      course: "SENG 1223",
-      startTime: "10:00:00",
-      endTime: "10:00:00",
-      hall: "A11 301",
-      status: "Not Yet Started",
-    },
-    {
-      course: "SENG 1223",
-      startTime: "10:00:00",
-      endTime: "10:00:00",
-      hall: "A11 301",
-      status: "Not Yet Started",
-    },
-  ];
+  const timetableData = todayCourses.map((item) => {
+    let status = "Not Yet Started";
+
+    if (item.is_cancelled) {
+      status = "Cancelled";
+    } else {
+      const now = new Date();
+      const start = new Date(`1970-01-01T${item.start_time}`);
+      const end = new Date(`1970-01-01T${item.end_time}`);
+
+      if (now > end) status = "Finished";
+      else if (now >= start && now <= end) status = "Ongoing";
+    }
+
+    return {
+      course: item.course_code,
+      startTime: item.start_time,
+      endTime: item.end_time,
+      hall: item.hall,
+      status,
+    };
+  });
 
   return (
     <>
       <div className="mx-16">
-        <div className="mb-10 text-2xl font-medium text-start">Hi, {studentName}</div>
+        <div className="mb-10 text-2xl font-medium text-start">
+          Hi, {studentName}
+        </div>
         <div className="flex flex-col justify-between gap-10 lg:flex-row">
           <DateTimeWidget />
-          <LectureDetailCard role={role} />
+          <LectureDetailCard
+            role={role}
+            courseCodevalue={nextLecture?.course_code}
+            startTimevalue={nextLecture?.start_time}
+            endTimevalue={nextLecture?.end_time}
+            locationvalue={nextLecture?.hall}
+          />
         </div>
 
         <div className="pb-10 mt-10">
