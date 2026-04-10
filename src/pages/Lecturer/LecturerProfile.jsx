@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronDown, ChevronUp, CheckCircle, PlusCircle, User } from 'lucide-react';
+import { useSelector } from 'react-redux'; // <-- NEW: Import Redux to get the real user!
 
 const LecturerProfile = () => {
-  // 1. User Info State (You will eventually get this from your login token/context)
-  const [lecturerInfo] = useState({
-    name: 'Dr. Sarah Connor',
-    userId: '11',
-  });
+  // 1. Grab the REAL logged-in user from your Redux store
+  const { user } = useSelector((state) => state.auth);
 
-  // 2. Dropdown Toggle States (Tracks which years are open/closed)
+  // 2. Dropdown Toggle States
   const [openAssignedYears, setOpenAssignedYears] = useState({ 1: true, 2: false, 3: false, 4: false });
   const [openAvailableYears, setOpenAvailableYears] = useState({ 1: true, 2: false, 3: false, 4: false });
 
-  // 3. Real Data States (Starts empty, gets filled by the database!)
+  // 3. Real Data States
   const [assignedCourses, setAssignedCourses] = useState({ 1: [], 2: [], 3: [], 4: [] });
   const [availableCourses, setAvailableCourses] = useState({ 1: [], 2: [], 3: [], 4: [] });
 
-  // NEW: The function that calls your GET API to grab the courses
+  // 4. Fetch Function using the REAL user ID
   const fetchCourses = async () => {
+    if (!user?.id) return; // Safety check: Don't fetch until Redux has loaded the user
+
     try {
-      const response = await fetch(`http://localhost:5000/api/lecturer/${lecturerInfo.userId}/courses`);
+      const response = await fetch(`http://localhost:5000/api/lecturer/${user.id}/courses`);
       const data = await response.json();
       
       if (response.ok) {
@@ -33,10 +33,10 @@ const LecturerProfile = () => {
     }
   };
 
-  // NEW: Fire the fetch function automatically when the page loads
+  // Run fetch immediately when the page loads, or if the user object changes
   useEffect(() => {
     fetchCourses();
-  }, []); // The empty array means "only run this once when the page opens"
+  }, [user]); 
 
   const toggleYear = (year, type) => {
     if (type === 'assigned') {
@@ -46,14 +46,14 @@ const LecturerProfile = () => {
     }
   };
 
-  // 4. The Assign Function connecting to your POST API
+  // 5. The Assign Function using the REAL user ID
   const handleAssignCourse = async (courseCode) => {
     try {
       const response = await fetch('http://localhost:5000/api/assign-lecturer', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
-          lecturerId: lecturerInfo.userId, 
+          lecturerId: user.id, // Using real Redux ID
           courseCode: courseCode 
         })
       });
@@ -62,7 +62,7 @@ const LecturerProfile = () => {
 
       if (response.ok) {
         alert("✅ " + data.message);
-        fetchCourses(); // <-- NEW: Instantly refresh the lists so the UI updates!
+        fetchCourses(); // Instantly refresh
       } else {
         alert("❌ Error: " + data.error);
       }
@@ -89,21 +89,29 @@ const LecturerProfile = () => {
             <p className="text-sm text-gray-500">No courses available.</p>
           ) : (
             courses.map((course) => (
-              <div key={course.code} className="flex items-center justify-between p-3 border border-gray-800 rounded-md bg-[#1A1A1A]">
-                <div>
-                  <h4 className="font-bold text-[#00E5FF]">{course.code}</h4>
-                  <p className="text-sm text-gray-300">{course.name}</p>
+              // FIXED ALIGNMENT: Added gap-4, flex-1, min-w-0, and shrink-0
+              <div key={course.code} className="flex items-center justify-between p-3 border border-gray-800 rounded-md bg-[#1A1A1A] gap-4">
+                
+                {/* Text Container: flex-1 allows it to take space, min-w-0 prevents it from pushing the button out */}
+                <div className="flex-1 min-w-0">
+                  <h4 className="font-bold text-[#00E5FF] truncate">{course.code}</h4>
+                  <p className="text-sm text-gray-300 truncate" title={course.name}>{course.name}</p>
                 </div>
-                {type === 'available' ? (
-                  <button 
-                    onClick={() => handleAssignCourse(course.code)}
-                    className="flex items-center gap-1 px-3 py-1 text-sm font-semibold text-white transition-colors bg-[#00E5FF] rounded hover:bg-[#00B3CC]"
-                  >
-                    <PlusCircle size={16} /> Enroll
-                  </button>
-                ) : (
-                  <CheckCircle size={20} className="text-gray-500" />
-                )}
+
+                {/* Button Container: shrink-0 guarantees the button never gets squished */}
+                <div className="shrink-0 flex justify-end">
+                  {type === 'available' ? (
+                    <button 
+                      onClick={() => handleAssignCourse(course.code)}
+                      className="flex items-center gap-1 px-3 py-1 text-sm font-semibold text-white transition-colors bg-[#00E5FF] rounded hover:bg-[#00B3CC]"
+                    >
+                      <PlusCircle size={16} /> Enroll
+                    </button>
+                  ) : (
+                    <CheckCircle size={20} className="text-gray-500" />
+                  )}
+                </div>
+
               </div>
             ))
           )}
@@ -118,12 +126,13 @@ const LecturerProfile = () => {
         
         {/* Profile Header Block */}
         <div className="bg-[#2A2A2A] rounded-xl p-8 border border-gray-800 flex items-center gap-6">
-          <div className="flex items-center justify-center w-24 h-24 bg-[#1A1A1A] rounded-full text-[#00E5FF] border-2 border-[#00E5FF]/30">
+          <div className="flex items-center justify-center w-24 h-24 bg-[#1A1A1A] rounded-full text-[#00E5FF] border-2 border-[#00E5FF]/30 shrink-0">
             <User size={40} />
           </div>
           <div>
-            <h1 className="mb-2 text-3xl font-bold">{lecturerInfo.name}</h1>
-            <p className="text-gray-400">Lecturer ID: <span className="font-semibold text-white">{lecturerInfo.userId}</span></p>
+            {/* Using REAL Redux Data */}
+            <h1 className="mb-2 text-3xl font-bold">{user?.username || 'Loading Name...'}</h1>
+            <p className="text-gray-400">Lecturer ID: <span className="font-semibold text-white">{user?.id || '...'}</span></p>
           </div>
         </div>
 
