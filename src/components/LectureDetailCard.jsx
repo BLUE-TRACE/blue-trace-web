@@ -47,7 +47,7 @@ const LectureDetailCard = ({
 
     try {
       const res = await axios.post("http://localhost:5000/api/start-session", {
-        courseCode: courseCodevalue.replace(/\s/g, ""),
+        courseCode: courseCodevalue,
         lecturerId: lecturerId,
       });
 
@@ -101,7 +101,7 @@ const LectureDetailCard = ({
       <div className="grid items-end grid-cols-1 gap-6 md:grid-cols-12 md:gap-4">
         {/* Column 1: Course Code & Start Time */}
         <div className="flex flex-col gap-8 md:col-span-4">
-          <h3 className="text-xl tracking-wide text-white">{courseCode}</h3>
+          <h3 className="text-xl tracking-wide text-white">{courseCodevalue}</h3>
           <div>
             <p className="mb-2 text-sm text-gray-400">{startTime}</p>
             <div className="bg-[#141414] text-gray-200 px-4 py-3 rounded-lg w-full md:w-[90%] text-sm">
