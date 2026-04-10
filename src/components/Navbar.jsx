@@ -100,7 +100,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="relative z-50 flex flex-wrap items-center justify-between px-6 py-4 text-gray-100 bg-gray-900 md:px-2 lg:px-6">
+    <nav className="flex flex-wrap items-center justify-between px-6 py-4 relative z-50 text-gray-100 bg-gray-900 md:px-2 lg:px-6">
       {/* Logo 1 */}
       <div className="flex items-center gap-2 md:hidden">
         <div className="w-2.5 h-2.5 bg-cyan-400 rounded-full" />
@@ -132,7 +132,7 @@ const Navbar = () => {
         </div>
 
         {/* Tabs */}
-        <ul className="flex flex-col items-start gap-2 p-0 m-0 list-none md:flex-row md:items-center sm:gap-0 lg:gap-4">
+        <ul className="flex flex-col items-start p-0 m-0 list-none md:flex-row md:items-center gap-2 sm:gap-0 lg:gap-4">
           {tabs.map((tab) => (
             <li
               key={tab.name}
@@ -153,17 +153,14 @@ const Navbar = () => {
         </ul>
 
         {/* Right icons */}
-        <div className="flex items-center gap-5 px-3 pt-4 mt-4 border-t border-gray-700 md:gap-2 lg:gap-5 md:mt-0 md:pt-0 md:border-none md:px-0">
+        <div className="flex items-center px-3 pt-4 mt-4 border-t border-gray-700 gap-5 md:gap-2 lg:gap-5 md:mt-0 md:pt-0 md:border-none md:px-0">
           {" "}
-          <button className="px-0 text-gray-300 transition-colors bg-transparent border-none cursor-pointer hover:text-cyan-400">
+          <button className="p-0 text-gray-300 transition-colors bg-transparent border-none cursor-pointer px-0 hover:text-cyan-400">
             <FaCalendarAlt size={18} />
           </button>
           <button className="p-0 m-0 text-gray-300 transition-colors bg-transparent border-none cursor-pointer hover:text-cyan-400">
             <FaBell size={18} />
           </button>
-          {/* <button className="text-gray-300 transition-colors bg-transparent border-none cursor-pointer hover:text-cyan-400">
-            <FaUserCircle size={20} />
-          </button> */}
           <div className="relative" ref={menuRef}>
             <button
               onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
@@ -180,6 +177,19 @@ const Navbar = () => {
                   {user?.username || "User"}
                 </div>
 
+                {/* DYNAMIC PROFILE BUTTON: Shows for both student and lecturer */}
+                {(user?.role === "student" || user?.role === "lecturer") && (
+                  <button
+                    onClick={() => {
+                      navigate(`/${user.role}/profile`);
+                      setIsUserMenuOpen(false);
+                    }}
+                    className="w-full px-4 py-2 text-sm text-left text-gray-300 transition-colors hover:bg-gray-700"
+                  >
+                    My Profile
+                  </button>
+                )}
+
                 {/* Logout */}
                 <button
                   onClick={handleLogout}
@@ -187,18 +197,6 @@ const Navbar = () => {
                 >
                   Logout
                 </button>
-
-                {user?.role === "student" && (
-                <button
-                  onClick={() => {
-                    navigate("/student/profile");
-                    setIsUserMenuOpen(false);
-                  }}
-                  className="w-full px-4 py-2 text-sm text-left text-gray-300 transition-colors hover:bg-gray-700"
-                >
-                  My Profile
-                </button>
-                 ) }
               </div>
             )}
           </div>
