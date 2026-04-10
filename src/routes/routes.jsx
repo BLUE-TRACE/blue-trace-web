@@ -10,7 +10,7 @@ import Dashboard from "../pages/Lecturer/Dashboard";
 import AttendanceMark from "../pages/Lecturer/AttendanceMark";
 import TimeTablePage from "../pages/Lecturer/TimeTablePage";
 import ReportLecturer from "../pages/Lecturer/ReportLecturer";
-import LecturerProfile from "../pages/Lecturer/LecturerProfile"; // <-- ADDED THIS IMPORT
+import LecturerProfile from "../pages/Lecturer/LecturerProfile"; 
 
 // NOTE: IMPORT STUDENT PAGES
 import DashboardStudent from "../pages/Student/DashboardStudent";
