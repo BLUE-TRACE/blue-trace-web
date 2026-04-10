@@ -4,7 +4,7 @@ import { MoreVertical } from "lucide-react";
 const TimeTable = ({ data, role }) => {
   const [selectedDay, setSelectedDay] = useState("Monday");
 
-  const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+  const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
   const getStatusStyle = (status) => {
     switch (status) {
@@ -21,7 +21,7 @@ const TimeTable = ({ data, role }) => {
 
   return (
     <div className="px-10 py-6 text-white">
-      <h1 className="text-2xl font-semibold mb-6">
+      <h1 className="mb-6 text-2xl font-semibold">
         {role} Timetable
       </h1>
 
@@ -47,7 +47,7 @@ const TimeTable = ({ data, role }) => {
         {data.map((item, index) => (
           <div
             key={index}
-            className="grid grid-cols-5 items-center p-3 hover:bg-white/5 rounded-lg"
+            className="grid items-center grid-cols-5 p-3 rounded-lg hover:bg-white/5"
           >
             <span>{item.course}</span>
             <span>{item.time}</span>
@@ -62,7 +62,7 @@ const TimeTable = ({ data, role }) => {
                 <MoreVertical size={18} />
               </button>
             ) : (
-              <span className="text-gray-500 text-sm">-</span>
+              <span className="text-sm text-gray-500">-</span>
             )}
           </div>
         ))}

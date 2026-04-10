@@ -7,18 +7,17 @@ const StudentTimeTable = () => {
   const { user } = useSelector((state) => state.auth);
 
   // Day mapping to determine if a selected day is in the past, present, or future
-  const dayMap = { Monday: 1, Tuesday: 2, Wednesday: 3, Thursday: 4, Friday: 5, Saturday: 6, Sunday: 7 };
+  const dayMap = { Monday: 1, Tuesday: 2, Wednesday: 3, Thursday: 4, Friday: 5, Saturday: 6};
   const currentDayStr = new Date().toLocaleDateString("en-US", { weekday: "long" });
   
-  // Default to today if it's a weekday, otherwise default to Monday
-  const defaultDay = ["Saturday", "Sunday"].includes(currentDayStr) ? "Monday" : currentDayStr;
+  const defaultDay = dayMap[currentDayStr] ? currentDayStr : "Monday";
 
   const [selectedDay, setSelectedDay] = useState(defaultDay);
   const [timetable, setTimetable] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+  const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
   // Fetch Timetable Data
   useEffect(() => {

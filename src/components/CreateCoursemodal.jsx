@@ -94,8 +94,8 @@ const CreateCourseModal = ({ onClose }) => {
             <div>
               <label className="block mb-1 text-sm text-gray-400">Day</label>
               <select name="day" value={formData.day} onChange={handleChange} className="w-full p-2 text-white bg-black border border-gray-700 rounded outline-none focus:border-teal-500">
-                <option>Monday</option><option>Tuesday</option><option>Wednesday</option>
-                <option>Thursday</option><option>Friday</option>
+                <option value="Monday">Monday</option><option value="Tuesday">Tuesday</option><option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option><option value="Friday">Friday</option><option value="Saturday">Saturday</option>
               </select>
             </div>
           </div>
