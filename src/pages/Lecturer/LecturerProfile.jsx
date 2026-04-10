@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChevronDown, ChevronUp, CheckCircle, PlusCircle, User } from 'lucide-react';
 
 const LecturerProfile = () => {
@@ -12,20 +12,31 @@ const LecturerProfile = () => {
   const [openAssignedYears, setOpenAssignedYears] = useState({ 1: true, 2: false, 3: false, 4: false });
   const [openAvailableYears, setOpenAvailableYears] = useState({ 1: true, 2: false, 3: false, 4: false });
 
-  // 3. Mock Data for Courses (You will replace this with a GET request later!)
-  const [assignedCourses, setAssignedCourses] = useState({
-    1: [{ code: 'SE101', name: 'Introduction to Programming' }],
-    2: [{ code: 'SE201', name: 'Web Development' }],
-    3: [],
-    4: []
-  });
+  // 3. Real Data States (Starts empty, gets filled by the database!)
+  const [assignedCourses, setAssignedCourses] = useState({ 1: [], 2: [], 3: [], 4: [] });
+  const [availableCourses, setAvailableCourses] = useState({ 1: [], 2: [], 3: [], 4: [] });
 
-  const [availableCourses, setAvailableCourses] = useState({
-    1: [{ code: 'SE102', name: 'Statistics' }, { code: 'SE105', name: 'Fundamentals of Computing' }],
-    2: [],
-    3: [{ code: 'SE301', name: 'Cloud Computing' }],
-    4: []
-  });
+  // NEW: The function that calls your GET API to grab the courses
+  const fetchCourses = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/lecturer/${lecturerInfo.userId}/courses`);
+      const data = await response.json();
+      
+      if (response.ok) {
+        setAssignedCourses(data.assigned);
+        setAvailableCourses(data.available);
+      } else {
+        console.error("Failed to fetch courses:", data.error);
+      }
+    } catch (error) {
+      console.error("Error fetching courses:", error);
+    }
+  };
+
+  // NEW: Fire the fetch function automatically when the page loads
+  useEffect(() => {
+    fetchCourses();
+  }, []); // The empty array means "only run this once when the page opens"
 
   const toggleYear = (year, type) => {
     if (type === 'assigned') {
@@ -35,7 +46,7 @@ const LecturerProfile = () => {
     }
   };
 
-  // 4. The Assign Function connecting to your API!
+  // 4. The Assign Function connecting to your POST API
   const handleAssignCourse = async (courseCode) => {
     try {
       const response = await fetch('http://localhost:5000/api/assign-lecturer', {
@@ -51,7 +62,7 @@ const LecturerProfile = () => {
 
       if (response.ok) {
         alert("✅ " + data.message);
-        // NOTE: After success, you would normally trigger your GET API here to refresh the lists!
+        fetchCourses(); // <-- NEW: Instantly refresh the lists so the UI updates!
       } else {
         alert("❌ Error: " + data.error);
       }
@@ -74,7 +85,7 @@ const LecturerProfile = () => {
       
       {isOpen && (
         <div className="p-4 space-y-3 bg-[#111111] border-t border-gray-700">
-          {courses.length === 0 ? (
+          {(!courses || courses.length === 0) ? (
             <p className="text-sm text-gray-500">No courses available.</p>
           ) : (
             courses.map((course) => (
