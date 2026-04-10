@@ -11,7 +11,7 @@ const AuthRedirect = () => {
 
   // Role-based redirect
   if (user.role === "admin") {
-    return <Navigate to="/admin/dashboard" replace />;
+    return <Navigate to="/admin" replace />;
   }
 
   if (user.role === "lecturer") {

@@ -28,7 +28,7 @@ const SignIn = () => {
       const role = response?.user?.role;
 
       if (role === "admin") {
-        navigate("/admin/dashboard");
+        navigate("/admin");
         return;
       }
 
